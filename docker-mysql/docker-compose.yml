@@ -1,0 +1,18 @@
+services:
+  mySQL:
+    image: mysql:latest
+    restart: always
+    container_name: assessment
+    environment:
+      - MYSQL_DATABASE=assessment
+      - MYSQL_ROOT_PASSWORD=password
+    ports:
+      - '3307:3306'
+    command: 
+      --init-file /data/application/init.sql
+    volumes:
+      - ./init.sql:/data/application/init.sql
+
+volumes:
+  mysqldata:
+      

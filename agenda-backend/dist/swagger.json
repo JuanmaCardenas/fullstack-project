@@ -1,0 +1,238 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Documentation",
+        "description": "An API to manage users and available numbers",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/home/{orgId}": {
+            "get": {
+                "summary": "Get users by organization ID, excluding those without a number assigned",
+                "description": "Retrieve a list of users by organization ID.",
+                "parameters": [
+                    {
+                        "name": "orgId",
+                        "in": "path",
+                        "required": true,
+                        "description": "Organization ID",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of users retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/User"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No users found for the provided organization ID"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete user by ID",
+                "description": "Delete a user by their ID.",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "description": "User ID",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            }
+        },
+        "/user": {
+            "get": {
+                "summary": "Get available numbers",
+                "description": "Retrieve a list of available phone numbers.",
+                "responses": {
+                    "200": {
+                        "description": "List of available numbers retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/AvalibleNumber"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Create a new user",
+                "description": "Create a new user with the provided information.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/editUser/{userId}": {
+            "get": {
+                "summary": "Get user by ID",
+                "description": "Retrieve a user by their ID.",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "description": "User ID",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            },
+            "patch": {
+                "summary": "Update user by ID",
+                "description": "Update a user's information by their ID.",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "description": "User ID",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "User": {
+                "type": "object",
+                "properties": {
+                    "iduser": {
+                        "type": "integer",
+                        "description": "User ID"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "User name"
+                    },
+                    "surname": {
+                        "type": "string",
+                        "description": "User surname"
+                    },
+                    "org_id": {
+                        "type": "integer",
+                        "description": "User organization ID"
+                    },
+                    "phone_number": {
+                        "type": "integer",
+                        "description": "User phone number"
+                    }
+                },
+                "required": ["name", "surname", "org_id"]
+            },
+            "AvalibleNumber": {
+                "type": "object",
+                "properties": {
+                    "idAvalibleNumber": {
+                        "type": "integer",
+                        "description": "Phone number"
+                    }
+                }
+            }
+        }
+    }
+}
