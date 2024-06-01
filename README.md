@@ -2,6 +2,7 @@
 <ul>
   <li>Run server: <code>npm run dev</code></li>
   <li>Test: <code>npm run test</code></li>
+  <li>Swagger: <code>http://localhost:5000/swagger</code></li>
 </ul>
 
 <h2>Frontend</h2>
